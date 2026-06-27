@@ -288,7 +288,7 @@
     </div>
 
     <div class="action-bar">
-        <button class="btn-copy-all" id="btnCopyAll">📋 COPY DATA C - K</button>
+        <button class="btn-copy-all" id="btnCopyAll">📋 COPY</button>
     </div>
 
     <div class="table-wrapper">
@@ -297,7 +297,7 @@
                 <tr>
                     <th>Kolom C (Userid)</th>
                     <th>Kolom D</th>
-                    <th>Kolom E</th>
+                    <th>Kolom E (Nominal Asli)</th>
                     <th>Kolom F (Scatter)</th>
                     <th>Kolom G (Type Bet)</th>
                     <th>Kolom H</th>
@@ -310,7 +310,7 @@
                 <tr>
                     <td id="cellUserid" class="highlight-cell">-</td>
                     <td id="cellD"></td>
-                    <td id="cellE"></td>
+                    <td id="cellE" style="color: #fff; font-weight: 600;"></td>
                     <td id="cellScatter" style="color: #fff;">3 SCATTER</td>
                     <td id="cellTypeBet" class="highlight-cell">-</td>
                     <td id="cellH"></td>
@@ -337,6 +337,7 @@
         let userid = "-";
         let typeBet = "-";
         let idTransaksi = "-";
+        let nominalAsli = "";
         let creditValue = 0;
 
         if (text.trim() !== "") {
@@ -362,9 +363,11 @@
             if (betMatch && betMatch[1]) {
                 let rawNum = betMatch[1].replace(/,/g, '');
                 creditValue = parseFloat(rawNum);
+                // MENGGUNAKAN 'en-US' AGAR SEPARATOR RIBUAN MENJADI KOMA ( , ) CONTOH: 2,000
+                nominalAsli = creditValue.toLocaleString('en-US');
             }
 
-            // Klasifikasi Range Bet
+            // Klasifikasi Range Bet (Kolom G)
             if (creditValue >= 1600 && creditValue <= 2400) {
                 typeBet = "1,600-2,400";
             } else if (creditValue >= 2800 && creditValue <= 8000) {
@@ -377,7 +380,7 @@
                 typeBet = "IDR " + creditValue.toLocaleString('id-ID');
             }
 
-            debugDiv.innerHTML = `🟢 Log Terbaca -> Userid: <b>${userid}</b> | Bet: <b>${creditValue}</b> | ID Trans: <b>${idTransaksi != "-" ? "OK" : "KOSONG"}</b>`;
+            debugDiv.innerHTML = `🟢 Log Terbaca -> Userid: <b>${userid}</b> | Bet Asli: <b>${nominalAsli}</b> | ID Trans: <b>${idTransaksi != "-" ? "OK" : "KOSONG"}</b>`;
             debugDiv.style.color = "#00e676";
             debugDiv.style.borderLeftColor = "#00e676";
         } else {
@@ -387,6 +390,7 @@
         }
 
         document.getElementById('cellUserid').innerText = userid;
+        document.getElementById('cellE').innerText = nominalAsli; // Tampilkan nominal asli format koma ke Kolom E
         document.getElementById('cellTypeBet').innerText = typeBet;
         document.getElementById('cellIDTransaksi').innerText = idTransaksi;
     });
@@ -440,7 +444,7 @@
         
         const c = document.getElementById('cellUserid').innerText;
         const d = document.getElementById('cellD').innerText;
-        const e = document.getElementById('cellE').innerText;
+        const e = document.getElementById('cellE').innerText; // Format koma otomatis ikut ter-copy
         const f = document.getElementById('cellScatter').innerText;
         const g = document.getElementById('cellTypeBet').innerText;
         const h = document.getElementById('cellH').innerText;
@@ -448,7 +452,6 @@
         const j = rawImageUrl; 
         const k = document.getElementById('cellIDTransaksi').innerText;
 
-        // Data kolom D, E, H, I akan ikut ter-copy sebagai teks kosong murni
         const textToCopy = `${c}\t${d}\t${e}\t${f}\t${g}\t${h}\t${i}\t${j}\t${k}`;
 
         navigator.clipboard.writeText(textToCopy).then(() => {
