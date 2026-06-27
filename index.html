@@ -355,7 +355,8 @@
             // 2. SCANNING ID TRANSAKSI
             const txMatch = text.match(/Ext\.\s*ID\s*:\s*([^\r\n]+)/i);
             if (txMatch && txMatch[1]) {
-                idTransaksi = txMatch[1].trim();
+                // Di-split berdasarkan tanda minus (-) dan diambil potongan pertama indeks [0]
+                idTransaksi = txMatch[1].trim().split('-')[0];
             }
 
             // 3. SCANNING NOMINAL BET
@@ -390,7 +391,7 @@
         }
 
         document.getElementById('cellUserid').innerText = userid;
-        document.getElementById('cellE').innerText = nominalAsli; // Tampilkan nominal asli format koma ke Kolom E
+        document.getElementById('cellE').innerText = nominalAsli; 
         document.getElementById('cellTypeBet').innerText = typeBet;
         document.getElementById('cellIDTransaksi').innerText = idTransaksi;
     });
@@ -444,7 +445,7 @@
         
         const c = document.getElementById('cellUserid').innerText;
         const d = document.getElementById('cellD').innerText;
-        const e = document.getElementById('cellE').innerText; // Format koma otomatis ikut ter-copy
+        const e = document.getElementById('cellE').innerText; 
         const f = document.getElementById('cellScatter').innerText;
         const g = document.getElementById('cellTypeBet').innerText;
         const h = document.getElementById('cellH').innerText;
