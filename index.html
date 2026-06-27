@@ -288,7 +288,7 @@
     </div>
 
     <div class="action-bar">
-        <button class="btn-copy-all" id="btnCopyAll">📋 COPY</button>
+        <button class="btn-copy-all" id="btnCopyAll">📋 COPY DATA C - K</button>
     </div>
 
     <div class="table-wrapper">
@@ -309,12 +309,12 @@
             <tbody>
                 <tr>
                     <td id="cellUserid" class="highlight-cell">-</td>
-                    <td id="cellD" style="color: #555;">-</td>
-                    <td id="cellE" style="color: #555;">-</td>
+                    <td id="cellD"></td>
+                    <td id="cellE"></td>
                     <td id="cellScatter" style="color: #fff;">3 SCATTER</td>
                     <td id="cellTypeBet" class="highlight-cell">-</td>
-                    <td id="cellH" style="color: #555;">-</td>
-                    <td id="cellI" style="color: #555;">-</td>
+                    <td id="cellH"></td>
+                    <td id="cellI"></td>
                     <td id="cellSS">-</td>
                     <td id="cellIDTransaksi" style="word-break: break-all; color: #aaa;">-</td>
                 </tr>
@@ -327,7 +327,7 @@
 
 <script>
     const IMGBB_API_KEY = 'd7095fa9b829691dca438585646a7ed2';
-    let rawImageUrl = "-"; 
+    let rawImageUrl = ""; // Default kosong polos jika belum upload gambar
 
     // Ekstraksi Log Teks
     document.getElementById('inputText').addEventListener('input', function() {
@@ -448,6 +448,7 @@
         const j = rawImageUrl; 
         const k = document.getElementById('cellIDTransaksi').innerText;
 
+        // Data kolom D, E, H, I akan ikut ter-copy sebagai teks kosong murni
         const textToCopy = `${c}\t${d}\t${e}\t${f}\t${g}\t${h}\t${i}\t${j}\t${k}`;
 
         navigator.clipboard.writeText(textToCopy).then(() => {
